@@ -114,10 +114,10 @@ DATABASES = {
 
         #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
        
-        'NAME': 'whatspp_v2',
+        'NAME': 'database1',
         'USER': 'Naresh',
-        'PASSWORD': '1243',
-        'HOST': 'localhost',
+        'PASSWORD': 'Naresh1234',
+        'HOST': 'database1.cgzt4westmuy.ap-south-1.rds.amazonaws.com',
         'PORT': '5432',
     }
 }
@@ -165,15 +165,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+# STATIC_URL = '/static/'
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+#     # 'content/static',
+# ]
+
+# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
+
+
+STATIC_ROOT = BASE_DIR.joinpath('static')
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    # 'content/static',
-]
-
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
-
+STATICFILES_DIRS = []
 
 
 MEDIA_URL = '/media/'
