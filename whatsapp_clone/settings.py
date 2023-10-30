@@ -33,6 +33,7 @@ SITE_ID = 12
 
 INSTALLED_APPS = [
     'channels',
+    'chats',
     'chats.apps.ChatsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
