@@ -1,0 +1,56 @@
+<!-- <div class="hidden bg-slate-800 font-bold  text-white shadow-sm shadow-slate-600 xl:block sm:min-w-[20%] ">
+    <ul class="py-4">
+      <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Home</li>
+      {% if request.user.is_Creator%}
+      <a href="{% url 'dashboard' %}">
+        <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Dashboard</li>
+      </a>
+      {% endif %}
+      <a href="{% url 'home' %}" > 
+      <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700"> Messages</li>
+      </a>
+      <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Services</li>
+      <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Contact</li>
+      <li class="border-b border-gray-700 px-4 py-5 flex flex-row justify-center itext-center hover:bg-slate-700">
+        
+        <img src = "{{request.user.image.url}}" alt = "profile pic" class="h-14 w-14 rounded-full">
+        <p class="flex items-center px-6">{{request.user.first_name}}</p></li>
+    </ul>
+  </div> -->
+
+
+  <div class="hidden bg-[#caf0f8] font-bold text-[#00002E]  shadow-2xl sm:block sm:w-72">
+    <ul class="py-4">
+      <a  href="{% url 'home' %}">
+       
+        <li class="border-y border-gray-400 px-4 py-5 text-center hover:text-[#8acdea] hover:bg-[#00002E]">
+          Chats</li>
+      </a>
+      <a href="{% url 'search' %}">
+        <li class="border-b border-gray-400 px-4 py-5 text-center hover:text-[#8acdea] hover:bg-[#00002E]">Search</li>
+      </a>
+
+      {% if request.user.is_Creator == True %}
+      <a href="{% url 'dashboard' %}">
+        <li class="border-b border-gray-400 px-4 py-5 text-center hover:text-[#8acdea] hover:bg-[#00002E]">Dashboard</li>  
+      </a>
+      
+      {% endif %}
+
+      <a href="{% url 'my_profile' %}">
+        
+        <li class="border-b border-gray-400 px-4 py-5 text-center hover:text-[#8acdea] hover:bg-[#00002E]">Profile</li>
+      </a>
+      <a href="{% url 'chats:logout' %}">
+        <li class="border-b border-gray-400 px-4 py-5 text-center hover:text-[#8acdea]  hover:bg-[#00002E]">Logout</li>
+      </a>
+
+      
+      <div class="border-b border-gray-400 px-12 py-5 flex flex-row">
+      
+      <img src = "{{request.user.image.url}}" alt = "profile pic" class="h-14 w-14 rounded-full">
+        <p class="flex items-center px-6">{{request.user.first_name}}</p></li>
+      </div>
+      
+    </ul>
+  </div>

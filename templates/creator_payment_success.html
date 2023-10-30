@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link rel="stylesheet" href="/static/css/output.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="font-bold">
+      <div class="text-center font-sans text-2xl font-bold  ">Payment Receieved 🥳</div>
+      
+      <p>Hello {{Order_obj.Creator.first_name}},</p>
+      <div class="ml-4">
+      <p>We are thrilled to inform you that a follower has made a payment and is eager to connect with you!</p>
+      <p>Payment Amount: ₹{{ Order_obj.amount}}</p>
+      <p>To begin the conversation, simply click the button below:</p>
+      <p><a class="btn" href="http://127.0.0.1:8000/chat/{{Order_obj.Follower.id}}">Start Conversation</a></p>
+      </div>
+
+      <p class="ml-4 pt-2">Best regards,<br />Your Website Team</p>
+    </div>
+  </body>
+</html>

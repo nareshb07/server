@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script>     -->
+    <link href="/static/css/output.css"  rel="stylesheet"/> 
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js" defer></script>
+</head>
+<body>
+    <!-- whole  page -->
+    <div class="relative flex  min-h-screen flex-col bg-[#caf0f8]">
+
+      <!-- Ribbon -->
+      <div id = "top-ribbon" class="relative flex items-center top-0 z-10 h-14 py-4 w-full bg-[#00002E]">
+        <span id = "goBackButton" >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="fill-current text-[#caf0f8] mx-4 w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+          </svg>
+        </span>
+        <h1 class="text-[#caf0f8] text-lg font-bold "> Search Users</h1>
+      
+        
+      </div>
+      <!-- end of ribbon -->
+    
+      <div class="flex flex-1 flex-row">
+
+        {% include 'desktop_nav.html' %}
+    
+         <!-- main content area -->
+        <!-- <div class="relative flex-1 bg-slate-800 px-6 pb-28 pt-10 shadow-slate-700 shadow-2xl ring-1 ring-gray-700 sm:mx-auto sm:max-w-[60%] sm:rounded-lg sm:px-10">
+          
+          <div class="flex mb-2 flex-row bg-slate-900 text-slate-400 rounded-xl hover:rounded-b-none justify-around">
+            <p class="pl-4 font-bold py-2"><b>Name</b>@Username</p>                  
+            <p class="py-2 px-4"> Rating / 5 </p>
+            <p onclick="toggleDeleteButton('{{feedback.id}}')" class="py-2 px-2"> 
+            <svg class="fill-current text-slate-400 h-6 w-6 transform transition-transform duration-500"
+            viewBox="0 0 20 20"><path d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10"></path>
+        </svg> </p>
+
+         
+          </div> -->
+
+          <div class="relative flex-1 bg-[#caf0f8] overflow-auto max-h-[calc(100vh-4rem)]  px-0 pb-28 pt-6  shadow-2xl  sm:mx-auto sm:max-w-[60%] sm:rounded-lg sm:px-10">
+            <table class="border-collapse w-full">
+                <thead>
+                    <tr class="bg-[#00002E] text-[#8acdea] rounded-xl hover:rounded-b-none">
+                        <th class="pl-10 text-start py-2">Name</th>
+                        <th class="py-2 text-center px-4">Rating / 5</th>
+                        <th class="py-2 text-start px-2">Feedback</th>
+                    </tr>
+                </thead>
+
+          {% for feedback in user_feedback_obj %}
+          <!--  -->
+                <tbody>
+                    <tr class="border-b border-b-slate-700 text-[#00002E] hover:rounded-b-none">
+                        <td class="pl-10 flex flex-col  text-start py-2 font-bold"><b>{{feedback.Follower.first_name}}</b> <p>@{{feedback.Follower.username}}</p></td>
+                        <td class="py-2 text-center px-4">{{feedback.Rating}} </td>
+                        <td class="py-2  px-8 cursor-pointer" onclick="toggleDeleteButton('{{feedback.id}}')">
+                            <svg class="fill-current text-center text-[#00002E] h-6 w-6 transform transition-transform duration-500"
+                                viewBox="0 0 20 20">
+                                <path
+                                    d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10">
+                                </path>
+                            </svg>
+                        </td>
+                    </tr>
+                    
+                    <!-- Add more rows as needed -->
+                </tbody>
+                <tbody FeedbackId = "{{feedback.id}}" id = "feedback_modal" class="bg-[#00002E]  hidden py-3 feedback_modal">
+                  <th colspan = "3" class="pl-7 bg-transparent text-start rounded-b-lg py-3 text-[#8acdea] font-normal ">
+                    {{feedback.Feedback}}
+                  </th>
+                </tbody>
+            <!-- </table>
+        </div> -->
+
+        
+
+              <!-- <div class="pb-2 ">
+                
+                  
+                  <div class="flex flex-row border-b border-b-gray-700 text-slate-400  hover:rounded-b-none justify-around">
+                    <p class="pl-4 font-bold py-2"><b>{{feedback.Follower.first_name}} </b>@{{feedback.Follower.username}}</p>                  
+                    <p class="py-2 px-4"> {{feedback.Rating}} / 5 </p>
+                    <p onclick="toggleDeleteButton('{{feedback.id}}')" class="py-2 px-2"> 
+                    <svg class="fill-current text-slate-400 h-6 w-6 transform transition-transform duration-500"
+                    viewBox="0 0 20 20"><path d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10"></path>
+                </svg> </p>
+
+                 
+                  </div>
+
+                  <div id = "feedback_modal" FeedbackId = "{{feedback.id}}" class="hidden feedback_modal dark:bg-slate-900 rounded-t-none rounded-b-xl py-4 px-6">
+                    <p class="py-2 px-5 text-slate-300"> {{feedback.Feedback}} </p>
+                  </div>
+
+              </div> -->
+              {% endfor %}
+
+             
+
+              
+
+                            
+
+          
+
+          
+                  
+        </div> 
+
+                
+                  
+              </div>
+            </div>
+
+
+
+
+          
+       
+
+
+        </div>
+      </div>
+      
+    </div>
+
+    {% include 'mobile_nav.html' %}
+   
+  </body>
+
+</html>  
+
+<script>
+
+    //// The Back button functionality
+    document.getElementById('goBackButton').addEventListener('click', function () {
+      window.history.back();
+  });
+
+     
+
+    function toggleDeleteButton(id) {
+    
+    const modal = document.querySelector(`.feedback_modal[FeedbackId="${id}"]`);
+    
+    modal.classList.toggle('hidden');
+  }
+    
+
+</script>

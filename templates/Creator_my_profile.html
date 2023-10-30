@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel = "stylesheet" href = "/static/css/output.css"/> 
+    <!-- <script src="https://cdn.tailwindcss.com"></script>    -->
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.0.0-beta.9/draggable.min.js"></script>
+
+</head>
+<body>
+    <!-- whole  page -->
+    
+
+    <div class="relative flex min-h-screen flex-col bg-[#caf0f8]">
+            <!-- Ribbon -->
+            <div class="h-14 flex items-center px-4 w-full bg-[#00002E]">
+
+        
+              <span id = "goBackButton">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="fill-current text-[#caf0f8] mr-4 w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+                </svg>
+              </span>
+            
+            <h1 class="text-[#caf0f8] text-lg font-bold " >My Profile</h1>
+            
+          </div>
+            
+          <!-- ribbon ends here -->
+
+       
+
+
+    
+
+
+      <div class="flex flex-1 flex-row">
+
+        <!-- Vertical Navigation Bar -->
+        {% include 'desktop_nav.html' %}
+        <!-- vertical nav bar ends here -->
+        
+
+        <!-- main content area -->
+        <div class="relative flex-1 bg-inherit px-6 pb-28 pt-10 shadow-2xl sm:mx-auto sm:max-w-[60%] sm:rounded-lg sm:px-10">
+          
+          <!-- section from profile pic to services -->
+          <div class="mx-auto max-w-xl border-b border-slate-500">
+
+            <!-- profile image section -->
+            <div class="flex items-start justify-center">
+              <img src="{{profile.user.image.url}}" class="object-cover h-24 w-24 rounded-full bg-slate-500" alt="Profile Picture" />
+            </div>
+            <!-- end of  profile image section -->
+
+            <!-- name and username section -->
+            <div class="mt-4 text-center text-[#00002E]">
+              <h2 class="text-xl  font-bold">{{profile.user.first_name}} {{profile.user.last_name}}</h2>
+              <p class="">@{{profile.user.username}}</p>
+              <h2 class=" text-xl font-bold">{{profile.Professional_label}}</h2>
+            </div>
+            <!-- end of name and username section -->
+
+            <!-- toggle switch -->
+            <div class="flex flex-row mt-3  ">
+              {% if profile.allow_messages %}
+              <h1 class="font-semibold mr-2 text-[#00002E] dark:stext-gray-300">Do you want allow Followers message you : <t class="font-bold">Yes</t></h1> 
+              {% else %}
+              <h1 class="font-semibold mr-2 text-[#00002E] dark:stext-gray-300">Do you want allow Followers message you : <t class="font-bold">No</t></h1> 
+              {% endif %}
+            </div> 
+            <!-- end of toggle switch -->
+
+            <!-- number of opened session creator want -->
+
+            <div class="flex  items-center space-x-4">
+                    
+              <label class="text-[#00002E] text-lg font-bold mt-6" for="timeInput">No of Open open sessions : {{profile.opened_sessions}}</label>
+            </div>
+
+            <!-- number of opened session creator want -->
+
+            <!-- replies in section -->
+
+            <div class="flex  items-center space-x-4">
+                    
+              <label class="text-[#00002E] text-lg font-bold mt-6" for="timeInput">Typically replies in (Hours): {{profile.reply_time}}</label>
+            </div>
+
+            <!-- replies in section -->
+
+
+                
+
+            <!-- About me , social profiles, service section -->
+            <div class="divide-y divide-gray-300/50 ">
+
+              <!-- About me , social profiles, service section -->
+              <div class="space-y-6 py-6 text-lg leading-7 text-[#00002E]">
+
+
+                <!-- social media profiles -->
+                <div class=""> 
+                <ul class="space-y-4">
+                  <li class="flex items-center">
+                    <label class="font-bold ">Social Profile link : </label>
+                    <p class="ml-4"></p>
+                    <a href="http://{{ profile.Social_Profile }}" target="_blank">
+                      <code class="text-base font-bold text-[#00002E]">{{profile.Social_Profile}}</code>
+                    </a>
+                  </li>
+                  <!-- <li class="flex items-center">
+                    <a href="#">
+                      <svg class="animate-pulse h-6 w-6 flex-none " xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 24 24" id="twitter"><path fill="#4EABFF" d="M22.99121,3.9502a.99942.99942,0,0,0-1.51074-.85938,7.47956,7.47956,0,0,1-1.873.793,5.15234,5.15234,0,0,0-3.374-1.24219,5.23238,5.23238,0,0,0-5.22363,5.06348A11.03194,11.03194,0,0,1,4.19629,3.78125,1.01154,1.01154,0,0,0,3.33887,3.416a.99852.99852,0,0,0-.78516.5,5.2755,5.2755,0,0,0-.24219,4.76855l-.00195.00195a1.0411,1.0411,0,0,0-.49512.88868,3.04174,3.04174,0,0,0,.02637.43945,5.1854,5.1854,0,0,0,1.56836,3.3125.99813.99813,0,0,0-.06641.76953,5.20436,5.20436,0,0,0,2.36231,2.92187,7.46464,7.46464,0,0,1-3.58985.44825.99975.99975,0,0,0-.665,1.833A12.94248,12.94248,0,0,0,8.46,21.36133,12.7878,12.7878,0,0,0,20.9248,11.998,12.82166,12.82166,0,0,0,21.46,8.35156c0-.06543,0-.13281-.001-.20019A5.76963,5.76963,0,0,0,22.99121,3.9502ZM19.68457,7.16211a.995.995,0,0,0-.2334.70215c.00977.165.00879.331.00879.4873a10.82371,10.82371,0,0,1-.4541,3.08106A10.68457,10.68457,0,0,1,8.46,19.36133a10.93791,10.93791,0,0,1-2.55078-.30078,9.47951,9.47951,0,0,0,2.94238-1.56348A1.00033,1.00033,0,0,0,8.25,15.71094a3.208,3.208,0,0,1-2.21387-.93457q.22413-.04248.44532-.10547a1.00026,1.00026,0,0,0-.08008-1.94336,3.19824,3.19824,0,0,1-2.25-1.72559,5.29929,5.29929,0,0,0,.54492.0459,1.02093,1.02093,0,0,0,.9834-.69629A.9998.9998,0,0,0,5.2793,9.21484,3.19559,3.19559,0,0,1,3.85547,6.542c0-.0664.00195-.13281.00586-.19824a13.01365,13.01365,0,0,0,8.209,3.47949,1.02046,1.02046,0,0,0,.81739-.3584,1.00037,1.00037,0,0,0,.206-.86816,3.15653,3.15653,0,0,1-.08691-.72852A3.23,3.23,0,0,1,16.2334,4.6416a3.18428,3.18428,0,0,1,2.34472,1.02051A.993.993,0,0,0,19.499,5.96a9.27073,9.27073,0,0,0,1.21192-.32226A6.68126,6.68126,0,0,1,19.68457,7.16211Z"></path></svg></a>
+                    <p class="ml-4">
+                      
+                      <code class="text-base font-bold text-sky-50">twitter.com/{{profile.twitter}} </code>
+                    </p>
+                  </li>
+                  <li class="flex items-center">
+                    <a href="#">
+                      <svg class="animate-pulse h-6 w-6" xmlns="http://www.w3.org/2000/svg" viewBox="5.368 13.434 53.9 37.855" id="youtube"><path fill="#FFF" d="M41.272 31.81c-4.942-2.641-9.674-5.069-14.511-7.604v15.165c5.09-2.767 10.455-5.301 14.532-7.561h-.021z"></path><path fill="#E8E0E0" d="M41.272 31.81c-4.942-2.641-14.511-7.604-14.511-7.604l12.758 8.575c.001 0-2.324 1.289 1.753-.971z"></path><path fill="#CD201F" d="M27.691 51.242c-10.265-.189-13.771-.359-15.926-.803-1.458-.295-2.725-.95-3.654-1.9-.718-.719-1.289-1.816-1.732-3.338-.38-1.268-.528-2.323-.739-4.9-.323-5.816-.4-10.571 0-15.884.33-2.934.49-6.417 2.682-8.449 1.035-.951 2.239-1.563 3.591-1.816 2.112-.401 11.11-.718 20.425-.718 9.294 0 18.312.317 20.426.718 1.689.317 3.273 1.267 4.203 2.492 2 3.146 2.035 7.058 2.238 10.118.084 1.458.084 9.737 0 11.195-.316 4.836-.57 6.547-1.288 8.321-.444 1.12-.823 1.711-1.479 2.366a7.085 7.085 0 0 1-3.76 1.922c-8.883.668-16.426.813-24.987.676zM41.294 31.81c-4.942-2.641-9.674-5.09-14.511-7.625v15.166c5.09-2.767 10.456-5.302 14.532-7.562l-.021.021z"></path></svg></a>
+                    <p class="ml-4">
+                      <code class="text-base font-bold text-sky-50">youtube.com/{{profile.twitter}}</code></p>
+                  </li> -->
+                </ul>
+              </div>
+              <!-- social media profiles -->
+
+                <p class="text-start "><b > About Me :</b> {{profile.About}}</p>
+               <p class="text-start" ><b > Service :</b> {{profile.service}}</p>
+              </div>
+              <!-- About me , social profiles, service section -->
+              
+            </div>
+            <!-- About me , social profiles, service section -->
+
+            
+          </div>
+          <!-- end of section from profile pic to services -->
+
+          <!-- edit button -->
+          <div class = "flex justify-center">
+            <a href="{% url 'edit_creator_profile' %}">
+                <button class = "bg-[#00002E] rounded-full font-bold text-lg mt-5 px-10 py-2 text-[#8acdea]"> Edit Profile </button>
+            </a>
+          </div>
+          <!-- end of edit button -->
+            
+
+        
+        
+      </div>
+      <!-- end of main content area -->
+      
+    </div>
+    <!-- whole  page -->
+
+
+    
+
+    
+     <!-- bottom nav bar -->
+     {% include 'mobile_nav.html' %}
+      <!--end of bottom nav bar -->
+   
+  </body>
+  <script>
+
+    /// Go Back Functionality
+    document.getElementById('goBackButton').addEventListener('click', function () {
+    window.history.back();
+    });
+
+
+  const openModal = () => {
+      
+      document.getElementById("modal").classList.remove("hidden");
+      //document.getElementById("main").classList.add("backdrop-blur-sm");
+    };
+    const closeModal = () => {
+      
+      document.getElementById("modal").classList.add("hidden");
+
+    };
+
+        ////for mobile menu //////
+        const open_menu = () => {
+      
+      document.getElementById("mobile-menu-icon").classList.add("hidden");
+      document.getElementById("cancel-icon").classList.remove("hidden");
+      document.getElementById("mobile-nav-bar").classList.remove("hidden");
+
+    };
+    const close_menu = () => {
+      
+      document.getElementById("mobile-menu-icon").classList.remove("hidden");
+      document.getElementById("cancel-icon").classList.add("hidden");
+      document.getElementById("mobile-nav-bar").classList.add("hidden");
+
+    };
+    ////for mobile menu //////
+        
+    
+
+    /////FAQ ////////////
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('accordion', {
+        tab: 0
+      });
+      
+      Alpine.data('accordion', (idx) => ({
+        init() {
+          this.idx = idx;
+        },
+        idx: -1,
+        handleClick() {
+          this.$store.accordion.tab = this.$store.accordion.tab === this.idx ? 0 : this.idx;
+        },
+        handleRotate() {
+          return this.$store.accordion.tab === this.idx ? 'rotate-180' : '';
+        },
+        handleToggle() {
+          return this.$store.accordion.tab === this.idx ? `max-height: ${this.$refs.tab.scrollHeight}px` : '';
+        }
+      }));
+    })
+  </script>
+</html>  

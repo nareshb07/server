@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Edit</title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script>     -->
+    <link rel = "stylesheet" href = "/static/css/output.css"/>
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js" defer></script>
+</head>
+<body>
+    <!-- whole  page -->
+    <div class="relative flex min-h-screen  flex-col bg-[#caf0f8]">
+      
+      <!-- ribbon -->
+      <div id = "top-ribbon" class="fixed flex items-center top-0 z-10 h-14 py-4 w-full bg-[#00002E]">
+        <span id = "goBackButton" >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="fill-current text-[#caf0f8] mx-4 w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+          </svg>
+        </span>
+        <h1 class="text-[#caf0f8] text-lg font-bold "> Edit Profile</h1>
+      </div>
+
+      <!-- ribbon -->
+
+      <div class="flex flex-1 flex-row pt-14">
+
+        <!-- laptop  Vertical Navigation Bar -->
+        {% include 'desktop_nav.html' %}
+        <!-- vertical nav bar ends here -->
+    
+         <!-- main content area -->
+        <div class="relative  overflow-auto flex-1  bg-inherit text-[#00002E] px-6 pb-28 pt-10 shadow-slate-700 shadow-2xl ring-1 ring-gray-700 md:mx-auto md:max-w-[60%] md:rounded-lg md:px-10">
+          
+
+          <!-- section from profile pic to services -->
+          <div class="mx-auto max-w-xs md:max-w-xl  ">
+            
+           <!-- profile image section -->
+            <div class="flex justify-center ">
+              <form action="{% url 'edit_creator_profile' %}" method="POST"  enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- profile image section -->
+                <div class="relative w-24 h-24">
+                  <img id="preview" class="w-full h-full object-cover rounded-full bg-slate-500" src="{{creator_profile.user.image.url}}" >
+                  <label for="profile-pic" class="absolute bottom-0 right-0 flex justify-center items-center rounded-full cursor-pointer bg-blue-900 bg-opacity-50 hover:bg-opacity-70 p-2">
+                    <svg class="w-4 h-4 text-blue-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <input class="hidden" type="file" id="profile-pic" name="profile-pic" accept="image/*" onchange="previewImage(event)">
+                  </label>
+                </div>
+                <!-- profile image section --> 
+            </div>
+            <!-- profile image section -->
+
+           
+            
+             <!--name and username section -->
+            <div class="flex justify-center">
+            <div class="mt-4 text-center">
+              
+              <div class=" flex flex-col text-[#00002E]">
+
+          
+
+
+        
+        
+        <input class="placeholder:text-gray-600 text-[#00002E] border border-slate-500 px-4 py-2 text-base font-bold rounded-xl mt-2 bg-inherit w-[20rem] text-center"
+                type="text"
+                id="name"
+                name="name"
+                value="{{creator_profile.user.first_name}}"
+                placeholder="Name">
+        
+
+         <input class="placeholder:text-gray-600 text-[#00002E] border border-slate-500 text-base px-4 py-2 font-bold rounded-xl mt-5 bg-inherit min-w-44 text-center"
+                type="text"
+                id="username"
+                name="username"
+                value="{{creator_profile.user.username}}"
+                placeholder="Username">
+         
+         <input class="placeholder:text-gray-600 text-[#00002E] border rounded-xl border-slate-500 mt-5 bg-inherit font-bold px-4 py-2 min-w-44 text-center"
+                type="text"
+                id="profession"
+                name="profession"
+                value="{{creator_profile.Professional_label}}"
+                placeholder="Professional_label">
+         
+                       
+            </div>
+            </div>
+            </div>
+             <!-- end of name and username section -->
+
+            <!-- About me , social profiles, service section -->
+            <div class="divide-y divide-gray-300/50 ">
+              <div class="space-y-6 py-8 text-base leading-7 text-[#00002E]">
+
+                  
+                  <!-- toggle switch -->
+                  <div class="flex flex-row  ">
+                    <h1 class="font-semibold mr-2 text-[#00002E] dark:stext-gray-300">Do you want allow Followers message you</h1> 
+                    <div class="flex items-center">
+                    <label class="relative inline-flex items-center cursor-pointer"> 
+
+                      {% if creator_profile.allow_messages %}
+                      <input type="checkbox" name="response" value="yes" class="sr-only peer" checked >
+                      {% else %}
+                      <input type="checkbox" name="response" value="yes" class="sr-only peer"  >
+                      {% endif %}
+                      <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                      
+                    </label>
+                  </div>
+                  </div> 
+                  <!-- end of toggle switch -->
+
+                  
+                  <div class="flex  items-center space-x-4">
+                    
+                    <label for="opened_sessions">How many session you Want in open:</label>
+                    <input class="border  appearance-noneborder-2 ml-4 rounded-lg  bg-inherit text-[#00002E] text-center w-24 border-gray-700 " type="number" value="{{creator_profile.opened_sessions}}" id="opened_sessions" name="opened_sessions" min="0" step="1">
+
+                  </div>
+
+                  <!-- reply time section -->
+
+                  <div class="flex  items-center space-x-4">
+                    
+                    <label for="timeInput">Typically replies in (Hours):</label>
+                    <input class="border  appearance-noneborder-2 ml-4 rounded-lg  bg-inherit text-[#00002E] text-center w-24 border-gray-700 " type="number" value="{{creator_profile.reply_time}}" id="timeInput" name="reply_time" min="0" step="1">
+
+                  </div>
+                   <!-- end of  reply time section -->
+                  
+                  <!-- social profile link -->
+                  <div class = "flex justifycenter ">
+                    <ul class="space-y-4">
+                      <li class="flex items-center">
+                        
+                          <label for = "social_profile_link" class="font-bold"> Social Profile Link : </label> 
+                        
+                        <p class="ml-4">
+                          <input id="social_profile_link" class="w-96 overflow-visible whitespace-normal bg-inherit text-sm placeholder:text-base font-semibold italic text-[#00002E] placeholder:text-slate-400 focus:outline-none md:text-base" type="text" placeholder="www.instagram.com/example" value="{{creator_profile.Social_Profile}}" name="social_profile" />
+                        </p>
+                        
+                      </li>
+                    </ul>
+                    </div>
+                    <!-- social profile link -->
+                  
+                  <!-- <div class="flex justify-center">
+                  <div class="flex items-center space-x-4">
+
+                        <label for = "reply_time" class="inline-block font-bold"> Reply Time : </label>
+                        <input id = "reply_time" class = "w-full focus:outline-none text-sm sm:text-base italic font-semibold bg-inherit text-white placeholder:text-slate-600 overflow-visible" type="text"  placeholder = "{{creator_profile.reply_time}}" name="reply_time" >
+
+                    </div>
+
+                  </div> -->
+
+                  <!-- reply time section -->
+
+
+                <!-- about me section  -->
+                <div class="flex flex-col md:flex-row justify-center  ">
+                <label for="about" class="text-md text-[#00002E] font-bold ml-"><p>About Me :</p></label>
+                  <textarea class = "placeholder:text-slate-400 text-[#00002E] mr-5 md:mr-0 w-full bg-transparent border border-slate-500 rounded-lg  text-justify px-2 focus:outline-none" id="about" name="about_me" rows="4" placeholder="Tell more about yourself" oninput="autoExpand(this)" >{{creator_profile.About}}</textarea>
+                </div>
+                <!-- send of about me section -->
+                
+                  <!-- service section starts here -->
+                <div class="flex flex-col md:flex-row  justify-center ">
+                  <label for="services" class="text-md text-[#00002E] font-bold ml-">Services:</label>
+                    <textarea class = "placeholder:text-slate-400 text-[#00002E] mr-5 md:mr-0 w-full  bg-transparent border border-slate-500 rounded-lg  px-2 text-justify  ml-2 focus:outline-none "id="service" name="Service" rows="4" placeholder="hello world" oninput="autoExpand(this)">{{creator_profile.service}}</textarea>
+                  </div>
+                    <!-- service section ends here -->
+                  
+
+
+
+
+              </div>
+
+              <!-- update profile button -->
+              <div class = "pt-5 flex justify-center">
+              <input class="resize-none bg-[#00002E]  px-5 py-3 text-[#8acdea] rounded-full font-bold text-base md:text-xl" type="submit" value="Update profile">  
+            </div>
+             <!-- update profile button -->
+            
+              </form>
+              
+             
+            </div>
+            
+          </div>
+
+          <div class="flex justify-center pt-10"> 
+            <button onclick="Open_Password_Modal()" class="bg-transparent ring-1 ring-[#00002E] px-4 py-3 rounded-full text-[#00002E] font-bold">Change Password</button>
+          </div>
+
+        <div id = "Password_Modal" class="hidden absolute inset-0 flex justify-center items-center">
+            <form method="post" action="{% url 'Update_Password' %}" >
+              {% csrf_token %}
+              <div class="bg-[#00002E] px-10 py-10 rounded-3xl">
+                <div id = "heading" class="flex justify-between">
+                <h1 class="text-[#8acdea] font-bold pb-5"> Change Password </h1>
+                <svg onclick = "Close_Password_Modal()" class = "items-center fill-current h-5 mt-1 text-[#8acdea] " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                </div>
+                
+              <div class="mb-4">
+                  <label for="CurrentPassword" class="block text-[#8acdea] text-sm font-bold mb-2"></label>
+                  <input type="text" name="CurrentPassword" id="CurrentPassword" placeholder="Current Password" required class="w-full text-[#8acdea] px-3 py-2 border border-[#8acdea] placeholder:text-[#caf0f8] rounded-3xl focus:outline-none bg-inherit font-bold text-center focus:border-[#8acdea]">
+              </div>
+
+              <!-- new password section -->
+              <div class="mb-4">
+                <label for="NewPassword" class="block text-[#8acdea] text-sm font-bold mb-2"></label>
+                <div class="relative">
+                    <input type="password" name="NewPassword" id="new_password" placeholder="New Password" required class="placeholder:text-[#caf0f8] w-full text-[#8acdea] px-3 py-2 border border-[#8acdea] rounded-3xl focus:outline-none bg-inherit font-bold text-center focus:border-[#8acdea]">
+                    <span class="text-slate-600 text-sm absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer" onclick="togglePasswordVisibility()">
+                      <svg id="ShowPassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+
+                    <svg id="HidePassword" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="hidden w-6 h-6">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" />
+                    </svg>
+                    
+                    </span>
+                </div>
+            </div>
+            <!-- end of new password section  -->
+
+              <div class="flex justify-center ">
+              <button type="submit" name="signup_form" class=" w-full bg-[#8acdea] text-[#00002E] hover:bg-[#caf0f8] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Change Password</button>
+              </div>
+              </div>
+            </form>
+          </div>
+
+          {% if messages %}
+          <div class="messages flex justify-center ">
+            <div class="absolute top-10">
+              {% for message in messages %}
+              <ul class="">     
+                <li class = "bg-[#00002E] rounded-xl font-semibold text-[#8acdea] px-4 py-2 opacity-90" {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+              </ul>
+                
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+         
+
+
+
+
+
+
+        </div>
+      </div>
+      
+    </div>
+
+    {% include 'mobile_nav.html' %}
+   
+  </body>
+  <script>
+
+        /// Go Back Functionality
+        document.getElementById('goBackButton').addEventListener('click', function () {
+        window.history.back();
+    });
+
+
+      setTimeout(function() {
+        var messageContainer = document.querySelector('.messages');
+        if (messageContainer) {
+            messageContainer.innerHTML = ''; // Clear the messages
+        }
+    }, 2000); // 
+        ///////Show Password and hide Password section//////////////////
+
+        function togglePasswordVisibility() {
+      var passwordInput = document.getElementById("new_password");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            document.getElementById("ShowPassword").classList.add("hidden");
+            document.getElementById("HidePassword").classList.remove("hidden");
+        } else {
+            passwordInput.type = "password";
+            document.getElementById("HidePassword").classList.add("hidden");
+            document.getElementById("ShowPassword").classList.remove("hidden");
+        }
+    }
+        
+    ////////End of Show Password and Hide Password section////////////
+    
+    //////////////////////Change Password Modal//////////////////////
+    
+    const Open_Password_Modal = () => {
+          
+          document.getElementById("Password_Modal").classList.remove("hidden");
+          //document.getElementById("main").classList.add("backdrop-blur-sm");
+        };
+        const Close_Password_Modal = () => {
+          
+          document.getElementById("Password_Modal").classList.add("hidden");
+    
+        };
+        //////////////////////////////////////////////////////////////////
+
+    ////for mobile menu //////
+    const open_menu = () => {
+      
+      document.getElementById("mobile-menu-icon").classList.add("hidden");
+      document.getElementById("cancel-icon").classList.remove("hidden");
+      document.getElementById("mobile-nav-bar").classList.remove("hidden");
+
+    };
+    const close_menu = () => {
+      
+      document.getElementById("mobile-menu-icon").classList.remove("hidden");
+      document.getElementById("cancel-icon").classList.add("hidden");
+      document.getElementById("mobile-nav-bar").classList.add("hidden");
+
+    };
+    ////for mobile menu //////
+
+ function previewImage(event) {
+  var input = event.target;
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('preview').src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+
+
+function autoExpand(textarea) {
+    textarea.style.height = 'auto';  // Reset the textarea height to auto to allow it to expand
+
+    // Set the height of the textarea to fit the content
+    textarea.style.height = (textarea.scrollHeight + 2) + 'px';
+}
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('accordion', {
+        tab: 0
+      });
+      
+      Alpine.data('accordion', (idx) => ({
+        init() {
+          this.idx = idx;
+        },
+        idx: -1,
+        handleClick() {
+          this.$store.accordion.tab = this.$store.accordion.tab === this.idx ? 0 : this.idx;
+        },
+        handleRotate() {
+          return this.$store.accordion.tab === this.idx ? 'rotate-180' : '';
+        },
+        handleToggle() {
+          return this.$store.accordion.tab === this.idx ? `max-height: ${this.$refs.tab.scrollHeight}px` : '';
+        }
+      }));
+    })
+  </script>
+</html>  

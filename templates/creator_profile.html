@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel = "stylesheet" href = "/static/css/output.css"/> 
+    <script src="https://cdn.tailwindcss.com"></script>   
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/draggable/1.0.0-beta.9/draggable.min.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+  </head>
+<body>
+   
+    <div class="relative flex min-h-screen flex-col bg-[#caf0f8]">
+      <!-- Ribbon -->
+      <div id = "top-ribbon" class="relative flex items-center top-0 z-10 h-14 py-4 w-full bg-[#00002E]">
+        <span id = "goBackButton" >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="fill-current text-[#caf0f8] mx-4 w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+          </svg>
+        </span>
+        <h1 class="text-[#caf0f8] text-lg font-bold "> Creator Profile</h1>
+      
+        
+      </div>
+      <!-- end of ribbon -->
+    
+      <div class="flex flex-1 flex-row">
+        <!-- Vertical Navigation Bar -->
+        {% include 'desktop_nav.html' %}
+
+
+
+        <!-- profile section  -->
+    
+        <div class="relative flex-1  bg-[#caf0f8] px-6 pb-44 pt-10 shadow-2xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-[60%] sm:rounded-lg sm:px-10">
+          <div class="mx-auto max-w-xl ">
+
+            <!-- <section class="bg-red-200 py-8   rounded-3xl"> -->
+            <div class="flex items-start justify-center ">
+              <img src="{{profile.user.image.url}}" class="object-cover ring-[#00002E] ring-1 h-24 w-24 rounded-full" alt="Profile Picture" />
+            </div>
+            <div class="mt-4 text-[#00002E] text-center">
+              
+              <h2 class="text-xl font-bold">{{profile.user.first_name}} {{profile.user.last_name}}</h2> 
+              
+               
+              
+              <p class="">@{{profile.user.username}}</p>
+              <h2 class="text-xl font-bold">{{profile.Professional_label}}</h2>
+            </div>
+          <!-- </section> -->
+
+          {% if request.user.id is not None  %}  
+              <!-- ---------11111111---------- -->
+
+              {% if creator_id ==  request.user.id %} 
+              <!-- ---------2222222222-------- -->
+
+              <div></div>
+
+              {% else %} 
+               <!-- ---------2222222222-------- -->
+
+              {% if session_status == True %}
+                
+                <a href="{% url 'chatPage' id=creator_id %}">
+                  <div class = "flex justify-center mb-10 ">
+                    <button  class = "bg-[#00002E] rounded-full font-bold text-[#8acdea] text-lg mt-5 px-10 py-2 hover:bg-[#161635]"> Message </button>
+                    </div>
+                  </a>
+
+                {% else %}
+
+                {% if not profile.allow_messages or  QueueFull %} 
+                <!-- ------3333----- -->
+
+                <div class = "flex justify-center mb-6 ">
+                  
+                  <button  class = "bg-slate-500 rounded-full font-bold text-[#8acdea] text-lg mt-5 px-10 py-2 "> Message </button>
+                  </div>
+                  <div class="flex justify-center">
+                  <h1 class="text-center px-3 w-fit rounded-lg  font-semibold py-1 bg-gray-300 "> creator is not allowing to Message right now</h1>
+                  </div>
+
+                {% else %}  
+                <!-- ------3333----- -->
+                
+                <div id = "button" class = "flex justify-center mb-10 ">
+                  <button  onclick="openModal()" class = "bg-[#00002E] rounded-full font-bold text-[#8acdea] text-lg mt-5 px-10 py-2 hover:bg-[#161635]"> Message </button>
+                  </div>
+                  
+                
+
+                {% endif %}  
+                 <!-- ------3333----- -->
+
+                
+
+                {% endif %}
+
+                
+
+              {% endif %}
+               <!-- ---------2222222222-------- -->
+
+            {% else %} 
+             <!-- ---------11111111---------- -->
+                
+              <a href="{% url 'chats:login' %}">
+                <div class = "flex justify-center mb-10 ">
+                  
+                  <button  class = "bg-[#00002E] rounded-full font-bold text-[#8acdea] text-lg mt-5 px-10 py-2 hover:bg-[#161635]"> Message </button>
+                  </div>
+                </a>
+
+          {% endif %} 
+          <!-- ---------11111111---------- -->
+
+
+            
+            <!-- {% if creator_id ==  request.user.id or not profile.allow_messages or request.user.id is None  %}
+            
+            
+            {% if request.user.id is None  %}
+            
+              
+            {% elif creator_id ==  request.user.id %}
+            
+              <div></div>
+            
+            {% elif  not profile.allow_messages %}
+            
+            
+            
+            {% endif %}
+           
+            {% elif  session_status == True %}
+            
+            <a href="{% url 'chatPage' id=creator_id %}">
+              <div class = "flex justify-center mb-10 ">
+                <button  class = "bg-[#00002E] rounded-full font-bold text-[#8acdea] text-lg mt-5 px-10 py-2 hover:bg-[#161635]"> Message </button>
+                </div>
+              </a>
+            
+
+            {% else %}
+            
+            {% if QueueFull == True %}
+            
+            <div class = "flex justify-center mb-6 ">
+              <button  class = "bg-slate-500 rounded-full font-bold text-[#8acdea] text-lg mt-5 px-10 py-2 "> Message </button>
+              </div>
+              <div class="flex justify-center">
+              <h1 class="text-center px-3 w-fit rounded-lg  font-semibold py-1 bg-gray-300 "> creator is not allowing to Message right now</h1>
+              </div>
+            {% else %}
+            
+           
+              {% endif %}
+
+              {% endif %} -->
+
+                <!-- Extra Large Modal -->
+                <div  id = "modal" class = "hidden md:mt-20 fixed left-0 right-0 top-0 z-50 max-h-full w-full md:ml-[500px] md:w-2/4 overflow-y-auto overflow-x-hidden p-4 md:inset-0">
+                  <div class="relative ">
+                    <!-- Modal content -->
+                    <div class="relative rounded-lg opacity-95 bg-[#00002E] shadow-xl ring-black ring-2">
+                      <!-- Modal header -->
+                      <div class="flex items-center justify-between rounded-t border-b p-5 dark:border-gray-600">
+                        <h3 class="text-xl  font-bold text-[#8acdea]">Rules</h3>
+                        <button onclick="closeModal()" class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-[#8acdea] hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" >
+                          <svg aria-hidden="true" class="h-5 w-5" fill="#caf0f8" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                          <span class="sr-only">Close modal</span>
+                        </button>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="space-y-6 p-6 text-base font-semibold text-[#8acdea] leading-relaxed">
+                        <p> Ensure that your communication with Creator is respectful and polite at all times. Avoid any form of harassment, hate speech, or abusive behavior.</p>
+                        <p> Chat sessions with the creator will continue until either the creator or you decide to end the chat. Please note that the closing of the session is solely at the discretion of the creator, and the demo company assumes no responsibility for this</p>
+                       <p >Refunds may be assessed in particular cases, such as instances involving technical issues. It's important to note that the refund process is subject to review and approval.</p>
+                       <p class="text-white"> By proceeding with the payment and chat session, you confirm that you have read, understood, and agreed to abide by these terms and conditions</p>
+                        
+                      </div>
+                      <!-- Modal footer -->
+                      <div class="flex items-center space-x-2 rounded-b border-t border-gray-200 p-6 dark:border-gray-600">
+                        
+                          <button  id="rzp-button1" type="submit" class="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 mr-5 rounded-3xl px-5 py-2.5 text-center text-xl font-bold text-slate-900  focus:outline-none focus:ring-4 focus:ring-blue  bg-yellow-300 hover:bg-yellow-400 "> Pay (₹{{profile.amount}})</button>
+                        
+                        <button onclick="closeModal()" type="button" class="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300 rounded-3xl border border-gray-200 bg-white px-5 py-2.5 text-xl font-bold text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:border-gray-500 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white dark:focus:ring-gray-600">Cancel</button>
+                      </div>  
+                    </div>
+                  </div>
+                </div>
+                <!-- modal ends here -->
+
+            <div class="divide-y divide-gray-300/50 ">
+              <div class="space-y-6 py-8 text-base leading-7 text-[#00002E]">
+                <p><b> About Me :</b> {{profile.About}}</p>
+                <ul class="space-y-4">
+                  <li class="flex items-center">
+                    <a href="#">
+
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                      </svg>
+                      
+                    </a>
+                    <p class="ml-4">
+                      <div  class="flex justify-center items-center">
+                        <a href="http://{{ profile.Social_Profile }}" target="_blank">
+                          <code class="text-base pr-5 font-bold text-[#00002E]">{{profile.Social_Profile}}</code>
+                        </a>
+                        {% if profile.verified %}
+                        <div class="relative group">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#228B22" class="w-6 h-6">
+                        
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                        </svg>
+
+                        <div id="tooltip" class="hidden md:block opacity-0 group-hover:opacity-100 bg-gray-700 text-white text-sm rounded py-2 px-4 absolute top-1/2 left-full transform -translate-y-1/2">
+                          Social Media account Verified
+                      </div>
+                    </div>
+
+                    {% else %}
+                      <div>
+                      </div>
+                    {% endif %}
+
+
+
+                      </div>
+                    </a>
+                  </li>
+                                   
+                </ul>
+                <div class="bg-red-700 px-3 text-white py-1 rounded-lg font-bold w-fit"> NOTE : Click on Social media links and verify the profiles</div>
+                <p class="font-bold">{{profile.service}}</p>
+              </div>
+             
+            </div>
+          </div>
+          
+   
+        </div>
+        
+      </div>
+      
+    </div>
+
+    {% include 'mobile_nav.html' %}
+   
+  </body>
+  <script>
+  
+  //// The Back button functionality
+  document.getElementById('goBackButton').addEventListener('click', function () {
+      window.history.back();
+  });
+
+    
+    
+
+
+    ///for rules modals
+  // const openModal = () => {
+    function openModal(){
+      
+      document.getElementById("modal").classList.remove("hidden");
+      //document.getElementById("main").classList.add("backdrop-blur-sm");
+    };
+    // const closeModal = () => {
+    function closeModal(){
+      
+      document.getElementById("modal").classList.add("hidden");
+
+    };
+
+        ////for mobile menu //////
+        const open_menu = () => {
+      
+      document.getElementById("mobile-menu-icon").classList.add("hidden");
+      document.getElementById("cancel-icon").classList.remove("hidden");
+      document.getElementById("mobile-nav-bar").classList.remove("hidden");
+
+    };
+    const close_menu = () => {
+      
+      document.getElementById("mobile-menu-icon").classList.remove("hidden");
+      document.getElementById("cancel-icon").classList.add("hidden");
+      document.getElementById("mobile-nav-bar").classList.add("hidden");
+
+    };
+    ////for mobile menu //////
+        
+
+    //payments//
+    
+var options = {
+    "key": "{{api_key}}", // Enter the Key ID generated from the Dashboard
+    "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Acme Corp", //your business name
+    "description": "Test Transaction caf0f8caf0f8",
+    "image": "https://picsum.photos/id/237/200/300",
+    "order_id": "{{ order_id }}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "callback_url": "{{ callback_url }}",
+    "prefill": { //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
+        // "name": "Gaurav Kumar", //your customer's name
+        "email": "gaurav.kumar@example.com",
+        // "contact": "9000090000" //Provide the customer's phone number for better conversion rates 
+    },
+    "notes": {
+        "address": "Razorpay Corporate Office"
+    },
+    "theme": {
+        "color": "#8acdea"
+    }
+};
+var rzp1 = new Razorpay(options);
+document.getElementById('rzp-button1').onclick = function(e){
+    rzp1.open();
+    e.preventDefault();
+}
+
+//payments//  
+    
+
+    /////FAQ ////////////
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('accordion', {
+        tab: 0
+      });
+      
+      Alpine.data('accordion', (idx) => ({
+        init() {
+          this.idx = idx;
+        },
+        idx: -1,
+        handleClick() {
+          this.$store.accordion.tab = this.$store.accordion.tab === this.idx ? 0 : this.idx;
+        },
+        handleRotate() {
+          return this.$store.accordion.tab === this.idx ? 'rotate-180' : '';
+        },
+        handleToggle() {
+          return this.$store.accordion.tab === this.idx ? `max-height: ${this.$refs.tab.scrollHeight}px` : '';
+        }
+      }));
+    })
+  </script>
+</html>  

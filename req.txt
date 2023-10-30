@@ -1,0 +1,5 @@
+pip install channels
+pip install django-crispy-forms
+pip install django-widget-tweaks
+pip install channels
+pip install django

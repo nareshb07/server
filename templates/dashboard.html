@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Profile</title>
+    <!-- <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js" defer></script> -->
+    <link href="/static/css/output.css"  rel="stylesheet"/> 
+  </head>
+  <body>
+    <!-- whole  page -->
+    <div class="relative flex min-h-screen flex-col bg-[#caf0f8]">
+      <!-- Ribbon -->
+       <!-- top ribbon  -->
+       <div id = "top-ribbon" class="relativen fixed top-0 flex items-center top-0k z-10 h-14 py-4 w-full bg-[#00002E]">
+        <span id = "goBackButton" >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="fill-current text-[#caf0f8] mx-4 w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
+          </svg>
+        </span>
+        <h1 class="text-[#caf0f8] text-lg font-bold "> Dashboard</h1>
+      
+        
+      </div>
+      <!--end of top ribbon  -->
+      <!-- ribbon ends here -->
+      
+      <!-- two sections  -->
+      <div class="flex flex-1 flex-row pt-14">
+        <!-- laptop  Vertical Navigation Bar -->
+        {% include 'desktop_nav.html' %}
+        <!-- vertical nav bar ends here -->
+
+        <!-- main content area -->
+        <div class="relative w-full flex-1 justify-center bg-[#caf0f8]  px-6 pb-28 shadow-2xl   sm:mx-auto sm:max-w-[60%] sm:rounded-lg sm:px-10">
+
+          <section>
+
+        <!-- for cards section -->
+      <section class="grid grid-rows-2 md:grid-rows-none md:grid-cols-3 mt-5">
+
+      <div class="mr-2 h-fit my-2 p-6 min-w-1/2 bg-[#00002E]  shadow-lg shadow-slate-600 sm:w-auto rounded-2xl">
+        
+        <!-- <div class="relative overflow-hidden p-6">
+          <div class="before:absolute before:w-32 before:h-32 before:-top-20 before:rounded-3xl before:-right-20 before:bg-red-500 before:z-0 before:transform before:rotate-45"></div> -->
+
+          <p class="text-center text-4xl font-semibold text-[#ade8f4]">{{record_count}}</p>
+        <h1 class="mt-2 text-center text-lg font-semibold text-[#ade8f4] sm:text-xl">Total Sessions</h1>
+      </div>
+      <!-- </div> -->
+
+      <a href="{% url 'feedback_and_rating' %}">
+        <div class="ml-2 sm:mr-2 h-fit my-2 min-w-1/2 bg-[#00002E] p-6 shadow-lg shadow-slate-600 sm:w-auto rounded-2xl">
+          <p class="text-center text-4xl font-semibold text-[#ade8f4]">{{average_rating}}</p>
+          <h1 class="mt-2 text-center text-lg font-semibold text-[#ade8f4] sm:text-xl">Average Rating</h1>
+        </div>
+      </a>
+
+      <div class="sm:mx-2 h-fit col-span-2 md:col-auto my-2 bg-[#00002E] p-6 shadow-lg shadow-slate-600 sm:w-auto rounded-2xl">
+          <p class="text-center text-4xl font-semibold text-[#ade8f4]">₹ <span>  {{ total_amount }} </span></p>
+          <h1 class="mt-2 text-center text-lg font-semibold text-[#ade8f4] sm:text-xl">Total Amount</h1>
+      </div>
+
+      </section>
+      <!-- end  for cards section -->       
+
+
+      <!-- table section  -->
+      <section class="mt-5 max-h-screen overflow-auto shadow-md shadow-black ">
+        
+       
+        <table class="w-full border-collapse border border-gray-700 ">
+            <thead>
+              <tr class="bg-[#00002E] text-[#ade8f4]">
+                <th class="py-2 px-4 text-left">Name</th>
+                <th class="py-2 px-4 text-left">Username</th>
+                <th class="py-2 px-4 text-left">Amount</th>
+                 <!-- <th class="py-2 px-4 text-left">Time</th> -->
+                <th class="py-2 px-4 text-left">session_status</th>
+                <th class="py-2 px-4 text-left">Rating</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {% for data in dashboard_data%}
+              <tr class="bg-[#ade8f4] text-[#00002E]">
+                <td class="py-2 px-4 font-bold"> {{data.Follower.first_name}}</td>
+                <td class="py-2 px-4">@{{data.Follower.username}}</td>
+                <td class="py-2 px-4">{{data.amount}}</td>
+                 <!-- <td class="py-2 px-4">{{data.timestamp}}</td> -->
+                <td class="py-2 px-4">{{data.session_status}}</td>
+                <td class="py-2 px-4">{{data.Rating}}</td>
+              </tr>
+              <!-- Add more rows as needed -->
+              {% endfor %}
+            </tbody>
+          </table>
+        <!-- </div> -->
+        
+      </section>
+      <!-- end of table section  -->
+
+
+
+
+      </section>
+      <!-- end of table and card section -->
+      </div>
+      <!-- end of main content area -->    
+    </div>
+    <!-- end of two sections  -->
+
+    <div>
+    <!-- end of whole page -->
+
+    {% include 'mobile_nav.html' %}
+
+
+  </body>
+</html>
+
