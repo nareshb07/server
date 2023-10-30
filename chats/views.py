@@ -39,7 +39,7 @@ class Follower_register(CreateView):
    
     model = User
     form_class = FollowerSignUpForm
-    template_name = 'new_follower_register.html'
+    template_name = 'follower_register.html'
 
     def form_valid(self, form):
         print("hello world")
@@ -52,7 +52,7 @@ class Creator_register(CreateView):
     # print("hello ap bye bye ycp111111")
     model = User
     form_class = CreatorSignUpForm
-    template_name = 'new_creator_register.html'
+    template_name = 'creator_register.html'
 
     
     def form_valid(self, form):

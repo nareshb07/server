@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-SITE_ID = 15
+# SITE_ID = 15 # server1-dev.ap-south-1.elasticbeanstalk.com
+
+SITE_ID = 14
 
 # Application definition
 

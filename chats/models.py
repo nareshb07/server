@@ -15,7 +15,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 class CustomUserManager(BaseUserManager):
 
-     def _create_user (self, email, password,first_name,last_name, **extra_fields):
+     def _create_user (self, email, password,first_name, **extra_fields):
      
          
         if not email:
@@ -26,18 +26,18 @@ class CustomUserManager(BaseUserManager):
         
         email = self.normalize_email(email)
 
-        user = self.model(email = email,first_name = first_name, last_name = last_name , **extra_fields)
+        user = self.model(email = email,first_name = first_name,  **extra_fields)
 
         user.set_password(password)
         user.save(using = self._db)
         return user
      
-     def create_user(self, email, password,first_name,last_name, **extra_fields):
+     def create_user(self, email, password,first_name, **extra_fields):
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
-        return self._create_user(email, password,first_name,last_name, **extra_fields)
+        return self._create_user(email, password,first_name, **extra_fields)
 
-     def create_superuser(self, email, password,first_name,last_name, **extra_fields):
+     def create_superuser(self, email, password,first_name, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
 
@@ -46,7 +46,7 @@ class CustomUserManager(BaseUserManager):
         if extra_fields.get("is_superuser") is not True:
             raise ValueError("Superuser must have is_superuser=True.")
 
-        return self._create_user(email, password,first_name,last_name, **extra_fields)
+        return self._create_user(email, password,first_name, **extra_fields)
 
 from .validator import UsernameValidator
 username_validator = UsernameValidator()
@@ -59,7 +59,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(db_index=True, unique= True, max_length=200)
    
     first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
+    
     username = models.CharField(
         _("username"),
         max_length=150,
@@ -94,14 +94,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "username"
-    REQUIRED_FIELDS = ["email","first_name","last_name"]
+    REQUIRED_FIELDS = ["email","first_name"]
 
     class Meta:
         verbose_name = _("user")
         verbose_name_plural = _("users")
 
     def __str__(self) -> str:
-        return self.first_name
+        return self.username
 
 class Follower(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE, primary_key = True)
