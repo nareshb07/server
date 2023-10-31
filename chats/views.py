@@ -239,7 +239,7 @@ def search(request):
 def search_users(request):
     search_query = request.GET.get('search', '')
     creators = Creator.objects.filter(user__first_name__icontains=search_query)
-    search_results = [{'first_name': creator.user.first_name, 'last_name': creator.user.last_name,
+    search_results = [{'first_name': creator.user.first_name, 
                        'image_url': creator.user.image.url, 'id': creator.user_id, 'username': creator.user.username,
                        'profession': creator.Professional_label} for creator in creators]
     return JsonResponse(search_results, safe=False)

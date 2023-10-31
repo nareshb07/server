@@ -27,9 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-# SITE_ID = 15 # server1-dev.ap-south-1.elasticbeanstalk.com
+SITE_ID = 15 # server1-dev.ap-south-1.elasticbeanstalk.com
 
-SITE_ID = 14
+# SITE_ID = 14
 
 # Application definition
 
@@ -167,19 +167,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-# STATIC_URL = '/static/'
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-#     # 'content/static',
-# ]
-
-# STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn")
-
-
-STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = []
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    # 'content/static',
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static_cdn")
+
+
+# STATIC_ROOT = 'static'
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = []
 
 
 MEDIA_URL = '/media/'
